@@ -1,0 +1,24 @@
+name: Lint
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup
+      run: |
+        echo ${HOME}/.local/bin >> ${GITHUB_PATH}
+        make version
+
+    - name: Install formatters
+      run: |
+        sudo make setup
+
+    - name: Lint
+      run: |
+        make lint

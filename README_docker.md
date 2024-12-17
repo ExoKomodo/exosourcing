@@ -17,7 +17,7 @@ If you want to build this container using some other versions of gcc and clang,
 you may do so with the `GCC_VER` and `LLVM_VER` arguments:
 
 ```bash
-docker build --tag=myproject:latest --build-arg GCC_VER=10 --build-arg LLVM_VER=11 .
+docker build --tag=exosourcing:latest --build-arg GCC_VER=10 --build-arg LLVM_VER=11 .
 ```
 
 The CC and CXX environment variables are set to GCC version 11 by default.
@@ -38,8 +38,8 @@ TLDR:
 
 ```bash
 docker run -it \
-	-v absolute_path_on_host_machine:absolute_path_in_guest_container \
-	my_project:latest
+ -v absolute_path_on_host_machine:absolute_path_in_guest_container \
+ my_project:latest
 ```
 
 You can configure and build [as directed above](#build) using these commands:
@@ -68,4 +68,3 @@ run them separately.
 
 A script called `build_examples.sh` is provided to help you to build the example
 GUI projects in this container.
-

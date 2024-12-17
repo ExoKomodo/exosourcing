@@ -3,7 +3,7 @@ include(cmake/CPM.cmake)
 # Done as a function so that updates to variables like
 # CMAKE_CXX_FLAGS don't propagate out to other
 # targets
-function(myproject_setup_dependencies)
+function(exosourcing_setup_dependencies)
 
   # For each dependency, see if it's
   # already been provided to us by a parent project
@@ -30,10 +30,6 @@ function(myproject_setup_dependencies)
 
   if(NOT TARGET CLI11::CLI11)
     cpmaddpackage("gh:CLIUtils/CLI11@2.3.2")
-  endif()
-
-  if(NOT TARGET ftxui::screen)
-    cpmaddpackage("gh:ArthurSonzogni/FTXUI@5.0.0")
   endif()
 
   if(NOT TARGET tools::tools)

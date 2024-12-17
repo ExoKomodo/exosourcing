@@ -1,9 +1,6 @@
 include(GenerateExportHeader)
 
-
 add_library(exosourcing exosourcing.cpp)
-
-
 
 add_library(exosourcing::exosourcing ALIAS exosourcing)
 

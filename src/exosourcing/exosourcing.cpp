@@ -1,4 +1,4 @@
-#include <myproject/sample_library.hpp>
+#include <exosourcing/exosourcing.hpp>
 
 int factorial(int input) noexcept
 {

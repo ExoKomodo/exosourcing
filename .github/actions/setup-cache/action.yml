@@ -1,0 +1,29 @@
+name: setup-cache
+description: Sets up a shared cache
+inputs:
+  compiler:
+    description: Compiler to cache
+    required: true
+  build-type:
+    description: Kind of build mode
+    required: true
+  generator:
+    description: CMake generator output
+    required: true
+  packaging-maintainer-mode:
+    description: Setting for packaging maintainer mode
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Cache
+      uses: actions/cache@v4
+      with:
+        # You might want to add .ccache to your cache configuration?
+        path: |
+          ~/.cache/pip
+          ~/.ccache
+        key: ${{ runner.os }}-${{ inputs.compiler }}-${{ inputs.build-type }}-${{ inputs.generator }}-${{ inputs.packaging-maintainer-mode }}-${{ hashFiles('**/CMakeLists.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-${{ inputs.compiler }}-${{ inputs.build-type }}

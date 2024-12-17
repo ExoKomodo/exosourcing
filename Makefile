@@ -1,0 +1,79 @@
+SHELL := /bin/bash
+.SHELLFLAGS = -e -c
+.DEFAULT_GOAL := help
+.ONESHELL:
+
+UNAME_S := $(shell uname -s)
+
+NO_GENERATE_TEMPLATES ?= 0
+RELEASE_KIND ?= debug
+
+ifeq ($(UNAME_S),Linux)
+CC := gcc
+endif
+ifeq ($(UNAME_S),Darwin)
+CC := clang
+endif
+
+export PATH := "$(shell pwd)/bin:$(PATH)"
+
+CMAKE_PRESET := unixlike-$(CC)-$(RELEASE_KIND)
+BINARY := $(shell pwd)/out/build/$(CMAKE_PRESET)/src/demo/demo
+
+.PHONY: configure
+configure: ## Configure default candidate
+	cmake . \
+		--preset $(CMAKE_PRESET)
+
+.PHONY: configure/debug
+configure/debug: ## Configure debug candidate
+	$(MAKE) configure RELEASE_KIND=debug
+
+.PHONY: configure/release
+configure/release: ## Configure release candidate
+	$(MAKE) configure RELEASE_KIND=release
+
+.PHONY: build
+build: configure  ## Build default candidate
+	cmake --build $(shell pwd)/out/build/$(CMAKE_PRESET)
+
+.PHONY: build/debug
+build/debug: ## Build debug candidate
+	$(MAKE) build RELEASE_KIND=debug
+
+.PHONY: build/release
+build/release: ## Build release candidate
+	$(MAKE) build RELEASE_KIND=release
+
+.PHONY: run
+run: MESSAGE := "Hello world"
+run: $(BINARY)  ## Run default candidate
+	$< --version --message $(MESSAGE)
+
+.PHONY: run/debug
+run/debug: ## Run debug candidate
+	$(MAKE) build RELEASE_KIND=debug
+
+.PHONY: run/release
+run/release: ## Run release candidate
+	$(MAKE) build RELEASE_KIND=release
+
+.PHONY: setup
+setup: ./scripts/setup ## Setup dependencies for system
+	@$<
+
+SOURCE_FILES := $(shell find ./src -type f -name '*.cpp')
+HEADER_FILES := $(shell find ./src -type f -name '*.hpp')
+BIN_DIR := $(shell pwd)/bin
+
+.PHONY: format
+format: ## Format the C/C++ code
+	echo $(SOURCE_FILES) $(HEADER_FILES) | xargs $(BIN_DIR)/clang-format -i
+
+.PHONY: tidy
+tidy: ## Tidy the C/C++ code
+	$(BIN_DIR)/clang-tidy $(SOURCE_FILES) $(HEADER_FILES)
+
+.PHONY: help
+help: ## Displays help info
+	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m\033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)

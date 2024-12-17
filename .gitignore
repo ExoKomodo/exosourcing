@@ -4,8 +4,9 @@ out/
 out/coverage/*
 cmake-build-*/
 conan-cache/
+bin/
 
-# User spesific settings
+# User specific settings
 CMakeUserPresets.json
 
 # IDE files

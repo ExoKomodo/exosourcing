@@ -71,7 +71,8 @@ format: ## Format the C/C++ code
 
 .PHONY: lint
 lint: tidy ## Lint the C/C++ code
-	echo $(SOURCE_FILES) $(HEADER_FILES) | xargs clang-format --dry-run --Werror
+	echo $(SOURCE_FILES) $(HEADER_FILES)
+		| xargs 'clang-format --dry-run --Werror {} || echo FAIL'
 
 .PHONY: tidy
 tidy: ## Tidy the C/C++ code

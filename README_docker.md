@@ -10,14 +10,14 @@ docker run -it my_project:latest
 
 This command will put you in a `bash` session in a Ubuntu 20.04 Docker container,
 with all of the tools listed in the [Dependencies](#dependencies) section already installed.
-Additionally, you will have `g++-11` and `clang++-13` installed as the default
+Additionally, you will have `g++-13` and `clang++-19` installed as the default
 versions of `g++` and `clang++`.
 
 If you want to build this container using some other versions of gcc and clang,
 you may do so with the `GCC_VER` and `LLVM_VER` arguments:
 
 ```bash
-docker build --tag=exosourcing:latest --build-arg GCC_VER=10 --build-arg LLVM_VER=11 .
+docker build --tag=exosourcing:latest --build-arg GCC_VER=13 --build-arg LLVM_VER=19 .
 ```
 
 The CC and CXX environment variables are set to GCC version 11 by default.
@@ -47,15 +47,6 @@ You can configure and build [as directed above](#build) using these commands:
 ```bash
 /starter_project# mkdir build
 /starter_project# cmake -S . -B ./build
-/starter_project# cmake --build ./build
-```
-
-You can configure and build using `clang-13`, without rebuilding the container,
-with these commands:
-
-```bash
-/starter_project# mkdir build
-/starter_project# CC=clang CXX=clang++ cmake -S . -B ./build
 /starter_project# cmake --build ./build
 ```
 

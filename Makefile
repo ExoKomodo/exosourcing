@@ -71,8 +71,21 @@ format: ## Format the C/C++ code
 
 .PHONY: lint
 lint: ## Lint the C/C++ code
-	echo $(SOURCE_FILES) $(HEADER_FILES) | xargs -I {} sh -c 'clang-format --dry-run --Werror {} || echo FAIL'
+	@FORMAT_OUT=$(echo $(SOURCE_FILES) $(HEADER_FILES) | xargs -I {} sh -c 'clang-format --dry-run --Werror {} || echo FAIL')
+	echo "[clang-format] BEGIN"
+	if [[ -n "${FORMAT_OUT}" ]]; then
+		echo "[clang-format] Found formatting errors"
+		echo "${FORMAT_OUT}"
+	else
+		echo "[clang-format] No formatting errors"
+	fi
+	echo "[clang-format] END"
+	echo "[clang-tidy] BEGIN"
 	$(MAKE) tidy
+	echo "[clang-tidy] END"
+	if [[ -n "${FORMAT_OUT}" ]]; then
+		exit 1
+	fi
 
 .PHONY: tidy
 tidy: ## Tidy the C/C++ code

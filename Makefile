@@ -70,8 +70,8 @@ format: ## Format the C/C++ code
 	echo $(SOURCE_FILES) $(HEADER_FILES) | xargs clang-format -i
 
 .PHONY: lint
-lint: ## Lint the C/C++ code
-	echo $(SOURCE_FILES) $(HEADER_FILES) | xargs clang-format
+lint: tidy ## Lint the C/C++ code
+	echo $(SOURCE_FILES) $(HEADER_FILES) | xargs clang-format --dry-run --Werror
 
 .PHONY: tidy
 tidy: ## Tidy the C/C++ code

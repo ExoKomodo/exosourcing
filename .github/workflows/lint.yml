@@ -13,6 +13,7 @@ jobs:
     - name: Setup
       run: |
         echo ${HOME}/.local/bin >> ${GITHUB_PATH}
+        make version
 
     - name: Install formatters
       run: |

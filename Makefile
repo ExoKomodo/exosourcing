@@ -64,15 +64,18 @@ setup: ./scripts/setup ## Setup dependencies for system
 
 SOURCE_FILES := $(shell find ./src -type f -name '*.cpp')
 HEADER_FILES := $(shell find ./src -type f -name '*.hpp')
-BIN_DIR := $(shell pwd)/bin
 
 .PHONY: format
 format: ## Format the C/C++ code
-	echo $(SOURCE_FILES) $(HEADER_FILES) | xargs $(BIN_DIR)/clang-format -i
+	echo $(SOURCE_FILES) $(HEADER_FILES) | xargs clang-format -i
+
+.PHONY: lint
+lint: ## Lint the C/C++ code
+	echo $(SOURCE_FILES) $(HEADER_FILES) | xargs clang-format
 
 .PHONY: tidy
 tidy: ## Tidy the C/C++ code
-	$(BIN_DIR)/clang-tidy $(SOURCE_FILES) $(HEADER_FILES)
+	clang-tidy $(SOURCE_FILES) $(HEADER_FILES)
 
 .PHONY: help
 help: ## Displays help info

@@ -21,7 +21,8 @@ case ${UNAME_S} in
 			cmake \
 			llvm \
 			ninja
-		BIN_DIR=${PWD}/bin
+		BIN_DIR=${HOME}/.local/bin
+		mkdir -p ${BIN_DIR}
 		ln -s "$(brew --prefix llvm)/bin/clang-format" ${BIN_DIR}/clang-format
 		ln -s "$(brew --prefix llvm)/bin/clang-tidy" ${BIN_DIR}/clang-tidy
 		;;

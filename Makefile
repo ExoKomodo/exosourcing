@@ -72,8 +72,8 @@ format: ## Format the C/C++ code
 .PHONY: lint
 lint: ## Lint the C/C++ code
 	@BAD_FILES=$(shell mktemp)
-	echo $(SOURCE_FILES) $(HEADER_FILES) | xargs -I {} sh -c 'clang-format --dry-run --Werror {} || echo {}' >> $${BAD_FILES}
 	echo "[clang-format] BEGIN"
+	echo $(SOURCE_FILES) $(HEADER_FILES) | xargs -I {} sh -c 'clang-format --dry-run --Werror {} || echo {}' >> $${BAD_FILES}
 	if [[ -s $${BAD_FILES} ]]; then
 		echo "[clang-format] Found formatting errors"
 		cat $${BAD_FILES}

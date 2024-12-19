@@ -67,11 +67,11 @@ HEADER_FILES := $(shell find ./src -type f -name '*.hpp')
 
 .PHONY: format
 format: ## Format the C/C++ code
-	echo $(SOURCE_FILES) $(HEADER_FILES) | xargs clang-format -i
+	@echo $(SOURCE_FILES) $(HEADER_FILES) | xargs clang-format -i
 
 .PHONY: lint
 lint: ## Lint the C/C++ code
-	BAD_FILES=$(shell mktemp)
+	@BAD_FILES=$(shell mktemp)
 	echo $(SOURCE_FILES) $(HEADER_FILES) | xargs -I {} sh -c 'clang-format --dry-run --Werror {} || echo {}' >> $${BAD_FILES}
 	echo "[clang-format] BEGIN"
 	if [[ -s $${BAD_FILES} ]]; then
@@ -90,7 +90,7 @@ lint: ## Lint the C/C++ code
 
 .PHONY: tidy
 tidy: ## Tidy the C/C++ code
-	clang-tidy $(SOURCE_FILES) $(HEADER_FILES)
+	@clang-tidy $(SOURCE_FILES) $(HEADER_FILES)
 
 .PHONY: version
 version: ## Version info

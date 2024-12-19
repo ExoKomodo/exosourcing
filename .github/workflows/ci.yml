@@ -15,7 +15,7 @@ env:
   VERBOSE: 1
 
 jobs:
-  test:
+  ci:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false

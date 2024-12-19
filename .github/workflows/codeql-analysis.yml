@@ -12,7 +12,7 @@ on:
     - cron: 38 0 * * 5
 
 jobs:
-  analyze:
+  codeql:
     name: Analyze
     runs-on: ubuntu-latest
 

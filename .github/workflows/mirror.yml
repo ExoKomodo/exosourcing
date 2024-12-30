@@ -1,0 +1,15 @@
+name: Mirror
+on:
+  push:
+    branches: main
+  workflow_dispatch:
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: jamesaorson/composite-git-mirror@main
+      with:
+        target-git-url: git@git.sr.ht:~exokomodo/${{ github.event.repository.name }}
+        ssh-private-key: ${{ secrets.SRHT_SSH_PRIVATE_KEY }}

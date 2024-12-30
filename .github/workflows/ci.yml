@@ -1,0 +1,59 @@
+name: CI build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+        build_type:
+          - Release
+        compiler:
+          - gcc
+          - clang
+        include:
+          - os: macos-latest
+            compiler: clang
+            cpp_compiler: clang++
+          - os: ubuntu-latest
+            compiler: gcc
+            cpp_compiler: g++
+          - os: ubuntu-latest
+            compiler: clang
+            cpp_compiler: clang++
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 1
+        submodules: true
+
+    - name: Setup
+      run: |
+        echo ${HOME}/.local/bin >> ${GITHUB_PATH}
+        make setup
+
+    - name: Configure
+      run: make configure
+
+    - name: Build
+      run: make build
+
+    - name: Test
+      run: make test
+
+    - name: Run
+      run: make run

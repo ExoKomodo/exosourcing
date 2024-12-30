@@ -1,0 +1,37 @@
+#! /bin/bash
+
+set -euo pipefail
+
+cd $(dirname ${BASH_SOURCE[0]})/..
+
+UNAME_S=$(uname -s)
+
+case ${UNAME_S} in
+	Linux*)
+		if sudo -v; then
+			if command -v apt-get >> /dev/null; then
+				sudo apt-get update
+				sudo apt-get install \
+					-y \
+					clang-format \
+					clang-tidy \
+					cmake \
+					ninja-build
+			fi
+		fi
+		;;
+	Darwin*)
+		brew install \
+			cmake \
+			llvm \
+			ninja
+		BIN_DIR=${HOME}/.local/bin
+		mkdir -p ${BIN_DIR}
+		ln -s "$(brew --prefix llvm)/bin/clang-format" ${BIN_DIR}/clang-format
+		ln -s "$(brew --prefix llvm)/bin/clang-tidy" ${BIN_DIR}/clang-tidy
+		;;
+	*)
+		echo "Unsupported platform: ${UNAME_S}"
+		exit 1
+		;;
+esac

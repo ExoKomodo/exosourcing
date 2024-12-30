@@ -1,0 +1,25 @@
+name: Lint
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 1
+        submodules: true
+
+    - name: Setup
+      run: |
+        echo ${HOME}/.local/bin >> ${GITHUB_PATH}
+        make setup
+
+    - name: Configure
+      run: make configure
+
+    - name: Lint
+      run: make lint

@@ -2,3 +2,7 @@
 	path = test/lib/catch2
 	url = https://github.com/catchorg/Catch2.git
 	branch = devel
+[submodule "lib/stduuid"]
+	path = lib/stduuid
+	url = https://github.com/mariusbancila/stduuid.git
+	branch = master

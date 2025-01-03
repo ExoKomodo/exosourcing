@@ -5,7 +5,9 @@
             "includePath": [
                 "${workspaceFolder}/include",
                 "${workspaceFolder}/test/lib/catch2/src",
-                "${workspaceFolder}/build/test/lib/catch2/generated-includes"
+                "${workspaceFolder}/build/test/lib/catch2/generated-includes",
+                "${workspaceFolder}/lib/stduuid",
+                "${workspaceFolder}/lib/stduuid/include",
             ],
             "macFrameworkPath": [
                 "/System/Library/Frameworks",

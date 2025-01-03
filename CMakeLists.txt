@@ -8,7 +8,9 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR})
 
 set(INCLUDE_DIR_exo ${PROJECT_SOURCE_DIR}/include)
+set(INCLUDE_DIR_stduuid ${PROJECT_SOURCE_DIR}/lib/stduuid)
 
+add_subdirectory(lib/stduuid)
 add_subdirectory(src)
 
 # Don't even look at tests if we're not top level

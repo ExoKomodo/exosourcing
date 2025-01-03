@@ -27,13 +27,13 @@ target_link_libraries(
 catch_discover_tests(
     tests
     TEST_PREFIX
-    "unittests."
+    "test."
     REPORTER
     XML
     OUTPUT_DIR
     .
     OUTPUT_PREFIX
-    "unittests."
+    "test."
     OUTPUT_SUFFIX
     .xml)
 

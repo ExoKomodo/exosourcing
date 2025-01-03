@@ -21,5 +21,8 @@ TEST_CASE("Can compare events with ==", PREFIX)
 
 TEST_CASE("Creation time is in the past", PREFIX)
 {
-  REQUIRE_PARALLEL(10'000, event.metadata.created >= NOW);
+  REQUIRE_PARALLEL(100'000, 100, event.metadata.created < NOW,
+    const auto event = exo::make_event<int>(1);
+    std::this_thread::sleep_until(NOW + std::chrono::microseconds(1));
+  );
 }
